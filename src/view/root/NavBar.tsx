@@ -48,6 +48,9 @@ const NavBar = () => {
         <Menu.Item>
           <Link to={"/problems"}>問題一覧</Link>
         </Menu.Item>
+        <Menu.Item>
+          <Link to={"/how-to-use"}>問題の解き方</Link>
+        </Menu.Item>
 
         <Menu.Menu position="right">
           {isWriter && (

@@ -7,6 +7,7 @@ import Submission from "./view/Submission";
 import NavBar from "./view/root/NavBar";
 import NewProblem from "./view/NewProblem";
 import ListProblems from "./view/ListProblems";
+import HowToUse from "./view/HowToUse";
 
 const App: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const App: React.FC = () => {
             render={props => <Problem draft={false} {...props} />}
           />
           <Route path="/submissions/:submissionId" component={Submission} />
+          <Route path="/how-to-use" component={HowToUse} />
         </Container>
       </div>
     </Router>
