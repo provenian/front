@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment, Menu, Dropdown, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "../components/Auth0Provider";
+import { useAuth0 } from "../../components/Auth0Provider";
 
 const NavBar = () => {
   const {

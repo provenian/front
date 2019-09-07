@@ -3,7 +3,7 @@ import { Tab, Table } from "semantic-ui-react";
 import axios from "axios";
 import { RouteComponentProps } from "react-router";
 import { Link } from "react-router-dom";
-import BuildBadge from "./BuildBadge";
+import BuildBadge from "./root/BuildBadge";
 import { useAuth0 } from "../components/Auth0Provider";
 import EditProblem from "./EditProblem";
 import ShowProblem from "./problem/ShowProblem";
@@ -63,7 +63,7 @@ const Content: React.FC<
       )).flat();
       setFileContents(files);
     })();
-  }, [props.match.params.problemId]);
+  }, [props.match.params.problemId, props.draft]);
 
   const submit = async ({ language, sourceCode }) => {
     const result = await axios.post(

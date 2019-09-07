@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Problem from "./view/Problem";
 import Index from "./view/Index";
 import Submission from "./view/Submission";
-import NavBar from "./view/NavBar";
+import NavBar from "./view/root/NavBar";
 import NewProblem from "./view/NewProblem";
 import ListProblems from "./view/ListProblems";
 

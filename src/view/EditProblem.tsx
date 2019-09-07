@@ -16,25 +16,19 @@ const EditProblem: React.FC<
   }>();
   const { getTokenSilently } = useAuth0() as any;
 
-  const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
-
   useEffect(() => {
     (async () => {
-      const { version, ...result } = (await axios.get(
+      const problem = (await axios.get(
         `${process.env.REACT_APP_FILE_STORAGE}/${props.match.params.problemId}${
           props.draft ? ".draft" : ""
         }.json`
       )).data;
 
-      if (version !== "1.0") {
+      if (problem.version !== "1.0") {
         return;
       }
 
-      setProblem(result);
-
-      setTitle(result.title);
-      setContent(result.content);
+      setProblem(problem);
     })();
   }, [props.match.params.problemId, props.draft]);
 

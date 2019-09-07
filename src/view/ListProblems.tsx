@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "semantic-ui-react";
 import axios from "axios";
 import { useAuth0 } from "../components/Auth0Provider";
-import { Link } from "react-router-dom";
 import ProblemTable from "./problem/ProblemTable";
 
 const ListProblems: React.FC<{ draft: boolean }> = props => {
