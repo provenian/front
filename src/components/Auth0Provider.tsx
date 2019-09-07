@@ -54,7 +54,6 @@ export const Auth0Provider = ({
         setLoading(false);
       } catch (err) {
         console.log(err);
-        auth0FromHook.loginWithRedirect();
       }
     };
     initAuth0();
