@@ -28,6 +28,16 @@ const getLanguageColor = (language: string) => {
 };
 
 const getTagColor = (tag: string) => {
+  if (tag === "Easy") {
+    return "orange";
+  } else if (tag === "Medium") {
+    return "teal";
+  } else if (tag === "Hard") {
+    return "pink";
+  } else if (tag === "Extreme") {
+    return "violet";
+  }
+
   return "grey";
 };
 

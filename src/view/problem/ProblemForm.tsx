@@ -9,21 +9,34 @@ interface ProblemDetail {
   content: string;
   content_type: string;
   files: [string, string[]][];
+  tags?: string[];
 }
 
 const ProblemForm: React.FC<{
-  problem: ProblemDetail;
+  problem?: ProblemDetail;
   draft: boolean;
-  onSubmit: (arg: { title: string; content: string; files: string[] }) => void;
+  onSubmit: (arg: {
+    title: string;
+    content: string;
+    files: string[];
+    tags: string[];
+  }) => void;
   onPublish?: () => void;
 }> = props => {
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
   const [title, setTitle] = useState("");
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
+    if (!props.problem) return;
+
     setContent(props.problem.content);
     setTitle(props.problem.title);
+
+    if (props.problem.tags) {
+      setTags(props.problem.tags);
+    }
 
     if (props.problem.files) {
       setFiles(
@@ -65,6 +78,11 @@ const ProblemForm: React.FC<{
           }
         </Segment>
       </Form.Field>
+      <Form.Input
+        label="タグ"
+        defaultValue={tags.join(",")}
+        onChange={event => setTags(event.target.value.split(","))}
+      />
       <Form.Field>
         <label>添付ファイル</label>
         <Table>
@@ -108,7 +126,8 @@ const ProblemForm: React.FC<{
           props.onSubmit({
             title,
             content,
-            files
+            files,
+            tags
           })
         }
       >
