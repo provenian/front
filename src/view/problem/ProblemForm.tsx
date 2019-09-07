@@ -20,7 +20,6 @@ const ProblemForm: React.FC<{
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
   const [title, setTitle] = useState("");
-  console.log(files);
 
   useEffect(() => {
     setContent(props.problem.content);
