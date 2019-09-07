@@ -24,7 +24,7 @@ const ProblemTable: React.FC<{
               <Link
                 to={
                   props.draft
-                    ? `/problems/${problem.id}/draft`
+                    ? `/me/problems/${problem.id}`
                     : `/problems/${problem.id}`
                 }
               >
