@@ -9,6 +9,7 @@ const ListProblems: React.FC<{ problems: any[] }> = props => {
         <Table.Row>
           <Table.HeaderCell>問題タイトル</Table.HeaderCell>
           <Table.HeaderCell>更新日時</Table.HeaderCell>
+          <Table.HeaderCell>問題タグ</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
@@ -21,6 +22,7 @@ const ListProblems: React.FC<{ problems: any[] }> = props => {
             <Table.Cell>
               {new Date(problem.updated_at * 1000).toLocaleString()}
             </Table.Cell>
+            <Table.Cell>problem.tags</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
