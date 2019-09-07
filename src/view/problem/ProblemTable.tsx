@@ -3,7 +3,10 @@ import { Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { ProblemDetail } from "../../types";
 
-const ProblemTable: React.FC<{ problems: ProblemDetail[] }> = props => {
+const ProblemTable: React.FC<{
+  problems: ProblemDetail[];
+  draft?: boolean;
+}> = props => {
   return (
     <Table celled compact>
       <Table.Header>
@@ -18,7 +21,15 @@ const ProblemTable: React.FC<{ problems: ProblemDetail[] }> = props => {
         {props.problems.map(problem => (
           <Table.Row key={problem.updated_at}>
             <Table.Cell>
-              <Link to={`/problems/${problem.id}/draft`}>{problem.title}</Link>
+              <Link
+                to={
+                  props.draft
+                    ? `/problems/${problem.id}/draft`
+                    : `/problems/${problem.id}`
+                }
+              >
+                {problem.title}
+              </Link>
             </Table.Cell>
             <Table.Cell>
               {new Date(problem.updated_at * 1000).toLocaleString()}

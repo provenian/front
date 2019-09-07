@@ -36,7 +36,7 @@ const ListProblems: React.FC<{ draft: boolean }> = props => {
     })();
   }, [isAuthenticated, props.draft]);
 
-  return <ProblemTable problems={problems}></ProblemTable>;
+  return <ProblemTable draft={props.draft} problems={problems}></ProblemTable>;
 };
 
 export default ListProblems;
