@@ -26,20 +26,18 @@ export const Auth0Provider = ({
       const auth0FromHook = await createAuth0Client(initOptions);
       setAuth0(auth0FromHook);
 
-      try {
-        if (window.location.search.includes("code=")) {
-          const { appState } = await auth0FromHook.handleRedirectCallback();
-          onRedirectCallback(appState);
-        }
+      if (window.location.search.includes("code=")) {
+        const { appState } = await auth0FromHook.handleRedirectCallback();
+        onRedirectCallback(appState);
+      }
 
-        const isAuthenticated = await auth0FromHook.isAuthenticated();
+      const isAuthenticated = await auth0FromHook.isAuthenticated();
 
-        setIsAuthenticated(isAuthenticated);
+      setIsAuthenticated(isAuthenticated);
 
-        if (isAuthenticated) {
-          const user = await auth0FromHook.getUser();
-          setUser(user);
-        }
+      if (isAuthenticated) {
+        const user = await auth0FromHook.getUser();
+        setUser(user);
 
         const token = await auth0FromHook.getTokenSilently();
         const payload = JSON.parse(atob(token.split(".")[1]));
@@ -50,15 +48,9 @@ export const Auth0Provider = ({
         if (roles && roles.includes("writer")) {
           setIsWriter(true);
         }
-
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-
-        if (err.error && err.error === "login_required") {
-          auth0FromHook.loginWithRedirect();
-        }
       }
+
+      setLoading(false);
     };
     initAuth0();
   }, []);

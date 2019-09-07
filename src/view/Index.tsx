@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Header, Image, Grid } from "semantic-ui-react";
-import axios from "axios";
 import { useAuth0 } from "../components/Auth0Provider";
 
 const Index: React.FC = () => {
@@ -8,11 +7,6 @@ const Index: React.FC = () => {
   useEffect(() => {
     (async () => {
       if (!isAuthenticated) return;
-
-      console.log(
-        (await axios.get(`${process.env.REACT_APP_FILE_STORAGE}/index.json`))
-          .data
-      );
     })();
   }, [isAuthenticated]);
 
