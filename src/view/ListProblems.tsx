@@ -3,6 +3,7 @@ import { Table } from "semantic-ui-react";
 import axios from "axios";
 import { useAuth0 } from "../components/Auth0Provider";
 import { Link } from "react-router-dom";
+import ProblemTable from "./problem/ProblemTable";
 
 const ListProblems: React.FC<{ draft: boolean }> = props => {
   const { isAuthenticated, getTokenSilently } = useAuth0() as any;
@@ -37,33 +38,7 @@ const ListProblems: React.FC<{ draft: boolean }> = props => {
     })();
   }, [isAuthenticated, props.draft]);
 
-  return (
-    <Table celled compact>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>問題タイトル</Table.HeaderCell>
-          <Table.HeaderCell>更新日時</Table.HeaderCell>
-          <Table.HeaderCell>タグ</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-
-      <Table.Body>
-        {problems.map(problem => (
-          <Table.Row key={problem.updated_at}>
-            <Table.Cell>
-              <Link to={`${props.draft ? "/me" : ""}/problems/${problem.id}`}>
-                {problem.title}
-              </Link>
-            </Table.Cell>
-            <Table.Cell>
-              {new Date(problem.updated_at * 1000).toLocaleString()}
-            </Table.Cell>
-            <Table.Cell>{problem.tags && problem.tags.join(",")}</Table.Cell>
-          </Table.Row>
-        ))}
-      </Table.Body>
-    </Table>
-  );
+  return <ProblemTable problems={problems}></ProblemTable>;
 };
 
 export default ListProblems;

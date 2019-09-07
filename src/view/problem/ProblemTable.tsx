@@ -1,8 +1,9 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { ProblemDetail } from "../../types";
 
-const ListProblems: React.FC<{ problems: any[] }> = props => {
+const ProblemTable: React.FC<{ problems: ProblemDetail[] }> = props => {
   return (
     <Table celled compact>
       <Table.Header>
@@ -22,7 +23,7 @@ const ListProblems: React.FC<{ problems: any[] }> = props => {
             <Table.Cell>
               {new Date(problem.updated_at * 1000).toLocaleString()}
             </Table.Cell>
-            <Table.Cell>problem.tags</Table.Cell>
+            <Table.Cell>{problem.tags && problem.tags.join(",")}</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
@@ -30,4 +31,4 @@ const ListProblems: React.FC<{ problems: any[] }> = props => {
   );
 };
 
-export default ListProblems;
+export default ProblemTable;
