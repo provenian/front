@@ -8,11 +8,6 @@ const Index: React.FC = () => {
   useEffect(() => {
     (async () => {
       if (!isAuthenticated) return;
-
-      console.log(
-        (await axios.get(`${process.env.REACT_APP_FILE_STORAGE}/index.json`))
-          .data
-      );
     })();
   }, [isAuthenticated]);
 
