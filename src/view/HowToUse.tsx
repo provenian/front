@@ -9,8 +9,14 @@ const HowToUse: React.FC = () => {
           <Header as="h2">環境について</Header>
           <p>現在サポートされている言語は次のとおりです</p>
 
-          <Header as="h4">Isabelle</Header>
-          <p>Isabelle (2019), LibraryはHOL(デフォルト)</p>
+          <Header as="h3">Isabelle</Header>
+          <List bulleted>
+            <List.Item>バージョン: 2019</List.Item>
+            <List.Item>Library: HOL(デフォルト)</List.Item>
+            <List.Item>
+              ビルドコマンド: <code>isabelle build -D [ディレクトリ名]</code>
+            </List.Item>
+          </List>
         </Grid.Column>
       </Grid.Row>
 
@@ -19,7 +25,7 @@ const HowToUse: React.FC = () => {
           <Header as="h2">問題の解き方について</Header>
           <p>言語ごとに問題の解き方について解説します。</p>
 
-          <Header as="h4">Isabelle</Header>
+          <Header as="h3">Isabelle</Header>
           <p>
             Isabelleでは通常、次のようなファイルが用意された状態でジャッジが行われます。
           </p>
