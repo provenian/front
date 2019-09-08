@@ -90,7 +90,6 @@ const ProblemForm: React.FC<{
             <Table.Row>
               <Table.HeaderCell singleLine>言語</Table.HeaderCell>
               <Table.HeaderCell>ファイル名</Table.HeaderCell>
-              <Table.HeaderCell>内容</Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
@@ -99,23 +98,12 @@ const ProblemForm: React.FC<{
               <Table.Row>
                 <Table.Cell>{language}</Table.Cell>
                 <Table.Cell>{filename}</Table.Cell>
-                <Table.Cell></Table.Cell>
               </Table.Row>
             ))}
-            <Table.Row>
-              <Table.Cell />
-              <Table.Cell />
-              <Table.Cell />
-              <Table.Cell>
-                <Form.Field>
-                  <Button>追加</Button>
-                </Form.Field>
-              </Table.Cell>
-            </Table.Row>
           </Table.Body>
         </Table>
       </Form.Field>
-      {props.draft && (
+      {props.draft && props.onPublish && (
         <Button secondary onClick={() => props.onPublish()}>
           問題を公開
         </Button>

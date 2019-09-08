@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Tab, Table } from "semantic-ui-react";
 import axios from "axios";
 import { RouteComponentProps } from "react-router";
@@ -32,6 +32,7 @@ const Content: React.FC<
   const [fileContents, setFileContents] = useState<
     { filename: string; content: string }[]
   >();
+  const [submitError, setSubmitError] = useState<string>();
 
   useEffect(() => {
     (async () => {
@@ -65,21 +66,29 @@ const Content: React.FC<
     })();
   }, [props.match.params.problemId, props.draft]);
 
-  const submit = async ({ language, sourceCode }) => {
-    const result = await axios.post(
-      `${process.env.REACT_APP_API_ENDPOINT}/problems/${props.match.params.problemId}/submit`,
-      {
-        language,
-        code: sourceCode
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${await getTokenSilently()}`
-        }
+  const submit = useCallback(
+    async ({ language, sourceCode }) => {
+      try {
+        const result = await axios.post(
+          `${process.env.REACT_APP_API_ENDPOINT}/problems/${props.match.params.problemId}/submit`,
+          {
+            language,
+            code: sourceCode
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${await getTokenSilently()}`
+            }
+          }
+        );
+
+        props.history.push(`/submissions/${result.data.id}`);
+      } catch (err) {
+        setSubmitError(err.message);
       }
-    );
-    props.history.push(`/submissions/${result.data.id}`);
-  };
+    },
+    [getTokenSilently, props.history, props.match.params.problemId]
+  );
 
   if (!problem || !fileContents) {
     return <>loading...</>;
@@ -93,6 +102,7 @@ const Content: React.FC<
       onLogin={loginWithRedirect}
       onSubmit={submit}
       draft={props.draft}
+      submitError={submitError}
     />
   );
 };

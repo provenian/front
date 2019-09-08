@@ -10,6 +10,8 @@ import {
 } from "semantic-ui-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { ProblemDetail } from "../../types";
+import remark from "remark";
+import reactRenderer from "remark-react";
 
 const getLanguageName = (language: string) => {
   if (language === "isabelle") {
@@ -49,6 +51,7 @@ const ShowProblem: React.FC<{
   isAuthenticated?: boolean;
   onLogin: () => void;
   onSubmit: (arg: { language: string; sourceCode: string }) => void;
+  submitError?: string;
   draft: boolean;
 }> = props => {
   const problem = props.problem;
@@ -83,7 +86,15 @@ const ShowProblem: React.FC<{
       )}
 
       <Header as="h2">{problem.title}</Header>
-      <p>{problem.content}</p>
+      <p>
+        {
+          remark()
+            .use(reactRenderer, {
+              sanitize: false
+            })
+            .processSync(problem.content).contents
+        }
+      </p>
 
       <div>
         <span>対応言語:</span>
@@ -128,6 +139,13 @@ const ShowProblem: React.FC<{
       ) : (
         <Form>
           <Header as="h4">提出</Header>
+
+          {props.submitError && (
+            <Message negative>
+              <Message.Header>Error!</Message.Header>
+              <p>{props.submitError}</p>
+            </Message>
+          )}
 
           <Form.Field>
             <label>言語</label>
