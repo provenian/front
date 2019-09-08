@@ -49,6 +49,7 @@ const ShowProblem: React.FC<{
   isAuthenticated?: boolean;
   onLogin: () => void;
   onSubmit: (arg: { language: string; sourceCode: string }) => void;
+  submitError?: string;
   draft: boolean;
 }> = props => {
   const problem = props.problem;
@@ -128,6 +129,13 @@ const ShowProblem: React.FC<{
       ) : (
         <Form>
           <Header as="h4">提出</Header>
+
+          {props.submitError && (
+            <Message negative>
+              <Message.Header>Error!</Message.Header>
+              <p>{props.submitError}</p>
+            </Message>
+          )}
 
           <Form.Field>
             <label>言語</label>
