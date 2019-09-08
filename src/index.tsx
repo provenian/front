@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "semantic-ui-css/semantic.min.css";
 import { Auth0Provider } from "./components/Auth0Provider";
+import "./index.css";
 
 const onRedirectCallback = (appState: any) => {
   window.history.replaceState(
