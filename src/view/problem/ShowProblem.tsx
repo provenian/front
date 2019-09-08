@@ -27,6 +27,20 @@ const getLanguageColor = (language: string) => {
   throw new Error("unreachable");
 };
 
+const getTagColor = (tag: string) => {
+  if (tag === "Easy") {
+    return "orange";
+  } else if (tag === "Medium") {
+    return "teal";
+  } else if (tag === "Hard") {
+    return "pink";
+  } else if (tag === "Extreme") {
+    return "violet";
+  }
+
+  return "grey";
+};
+
 const ShowProblem: React.FC<{
   problem: Omit<ProblemDetail, "files"> & {
     files: { filename: string; content: string }[];
@@ -78,6 +92,16 @@ const ShowProblem: React.FC<{
             {lang}
           </Label>
         ))}
+      </div>
+
+      <div>
+        <span>問題タグ:</span>
+        {props.problem.tags &&
+          props.problem.tags.map(tag => (
+            <Label key={tag} color={getTagColor(tag) as any}>
+              {tag}
+            </Label>
+          ))}
       </div>
 
       <Header as="h4">言語ファイル</Header>

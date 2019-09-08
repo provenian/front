@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "semantic-ui-react";
 import axios from "axios";
 import { RouteComponentProps } from "react-router";
-import BuildBadge from "./BuildBadge";
+import BuildBadge from "./root/BuildBadge";
 
 const sleep = (time: number) => {
   return new Promise((resolve, reject) => {
@@ -21,9 +21,7 @@ const Submission: React.FC<
   useEffect(() => {
     (async () => {
       const { code, result } = (await axios.get(
-        `${process.env.REACT_APP_API_ENDPOINT}/submissions/${
-          props.match.params.submissionId
-        }`
+        `${process.env.REACT_APP_API_ENDPOINT}/submissions/${props.match.params.submissionId}`
       )).data;
       axios
         .get(`${process.env.REACT_APP_FILE_STORAGE}/${code}`)
@@ -35,9 +33,7 @@ const Submission: React.FC<
       let count = 0;
       while (!result.is_finished && count < 100) {
         const { result } = (await axios.get(
-          `${process.env.REACT_APP_API_ENDPOINT}/submissions/${
-            props.match.params.submissionId
-          }`
+          `${process.env.REACT_APP_API_ENDPOINT}/submissions/${props.match.params.submissionId}`
         )).data;
 
         if (result.is_finished) {

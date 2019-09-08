@@ -9,4 +9,5 @@ export interface ProblemDetail {
   updated_at: number;
   version: string;
   writer: string;
+  tags?: string[];
 }

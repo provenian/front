@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment, Menu, Dropdown, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "../components/Auth0Provider";
+import { useAuth0 } from "../../components/Auth0Provider";
 
 const NavBar = () => {
   const {
@@ -47,6 +47,9 @@ const NavBar = () => {
         </Menu.Item>
         <Menu.Item>
           <Link to={"/problems"}>問題一覧</Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Link to={"/how-to-use"}>問題の解き方</Link>
         </Menu.Item>
 
         <Menu.Menu position="right">

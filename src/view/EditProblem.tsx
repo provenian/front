@@ -7,43 +7,39 @@ import ProblemForm from "./problem/ProblemForm";
 const EditProblem: React.FC<
   RouteComponentProps<{ problemId: string }> & { draft: boolean }
 > = props => {
-  const [problem, setProblem] = useState({} as {
+  const [problem, setProblem] = useState<{
     title: string;
     content: string;
     content_type: string;
     files: [string, string[]][];
-  });
+    tags: string[];
+  }>();
   const { getTokenSilently } = useAuth0() as any;
-
-  const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
 
   useEffect(() => {
     (async () => {
-      const { version, ...result } = (await axios.get(
+      const problem = (await axios.get(
         `${process.env.REACT_APP_FILE_STORAGE}/${props.match.params.problemId}${
           props.draft ? ".draft" : ""
         }.json`
       )).data;
 
-      if (version !== "1.0") {
+      if (problem.version !== "1.0") {
         return;
       }
 
-      setProblem(result);
-
-      setTitle(result.title);
-      setContent(result.content);
+      setProblem(problem);
     })();
   }, [props.match.params.problemId, props.draft]);
 
-  const submit = async () => {
+  const submit = async ({ title, content, files, tags }) => {
     const result = await axios.put(
       `${process.env.REACT_APP_API_ENDPOINT}/problems/${props.match.params.problemId}/edit`,
       {
         title,
         content,
-        content_type: "text/markdown"
+        content_type: "text/markdown",
+        tags
       },
       {
         headers: {
@@ -51,7 +47,10 @@ const EditProblem: React.FC<
         }
       }
     );
-    props.history.push(`/submissions/${result.data.id}`);
+
+    if (!props.draft) {
+      props.history.push(`/submissions/${result.data.id}`);
+    }
   };
 
   const publish = async () => {

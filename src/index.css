@@ -1,0 +1,25 @@
+body {
+  font-size: 16px;
+}
+
+p {
+  line-height: 1.618em;
+}
+
+.ui.list > .item {
+  line-height: 1.618em;
+}
+
+code {
+  font-size: 14px;
+  vertical-align: baseline;
+  font-family: monospace;
+  background-color: #eeeeee;
+  padding: 3px 5px;
+  margin: 0 3px;
+  border-radius: 3px;
+}
+
+pre > code {
+  display: block;
+}
