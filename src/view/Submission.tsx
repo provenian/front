@@ -59,14 +59,14 @@ const Submission: React.FC<
       <Header as="h2">結果</Header>
 
       <Header as="h4">ビルド出力</Header>
-      <code>
-        <pre>{judgeResult.message}</pre>
-      </code>
+      <pre>
+        <code>{judgeResult.message}</code>
+      </pre>
 
       <Header as="h4">提出コード</Header>
-      <code>
-        <pre>{source}</pre>
-      </code>
+      <pre>
+        <code>{source}</code>
+      </pre>
     </>
   );
 };
