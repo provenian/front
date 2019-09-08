@@ -13,6 +13,7 @@ const NewProblem: React.FC<RouteComponentProps> = props => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [tags, setTags] = useState([]);
   const [attachments, dispatchAttachments] = useReducer(
     (
       state: Array<{
@@ -86,7 +87,8 @@ theories [document = false]
         title,
         content,
         content_type: "text/markdown",
-        attachments: attachments
+        attachments,
+        tags
       },
       {
         headers: {
@@ -96,7 +98,7 @@ theories [document = false]
     );
 
     props.history.push("/me/problems");
-  }, [title, content, attachments]);
+  }, [title, content, attachments, tags]);
 
   return (
     <Form>
@@ -121,6 +123,11 @@ theories [document = false]
           }
         </Segment>
       </Form.Field>
+      <Form.Input
+        label="タグ"
+        defaultValue={tags.join(",")}
+        onChange={event => setTags(event.target.value.split(","))}
+      />
       <Form.Field>
         <label>添付ファイル</label>
         <Table>

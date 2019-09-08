@@ -87,7 +87,7 @@ const Content: React.FC<
         setSubmitError(err.message);
       }
     },
-    [getTokenSilently]
+    [getTokenSilently, props.history, props.match.params.problemId]
   );
 
   if (!problem || !fileContents) {
