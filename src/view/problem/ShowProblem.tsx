@@ -10,6 +10,8 @@ import {
 } from "semantic-ui-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { ProblemDetail } from "../../types";
+import remark from "remark";
+import reactRenderer from "remark-react";
 
 const getLanguageName = (language: string) => {
   if (language === "isabelle") {
@@ -84,7 +86,15 @@ const ShowProblem: React.FC<{
       )}
 
       <Header as="h2">{problem.title}</Header>
-      <p>{problem.content}</p>
+      <p>
+        {
+          remark()
+            .use(reactRenderer, {
+              sanitize: false
+            })
+            .processSync(problem.content).contents
+        }
+      </p>
 
       <div>
         <span>対応言語:</span>
