@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "semantic-ui-react";
+import { Header, Container } from "semantic-ui-react";
 import axios from "axios";
 import { RouteComponentProps } from "react-router";
 import BuildBadge from "./root/BuildBadge";
@@ -48,7 +48,7 @@ const Submission: React.FC<
   }, [props.match.params.submissionId]);
 
   return (
-    <>
+    <Container text>
       <Header as="h2">提出</Header>
       <BuildBadge
         size="massive"
@@ -67,7 +67,7 @@ const Submission: React.FC<
       <pre>
         <code>{source}</code>
       </pre>
-    </>
+    </Container>
   );
 };
 
