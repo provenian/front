@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Tab, Table } from "semantic-ui-react";
+import { Tab, Table, Container } from "semantic-ui-react";
 import axios from "axios";
 import { RouteComponentProps } from "react-router";
 import { Link } from "react-router-dom";
@@ -176,31 +176,35 @@ const Problem: React.FC<
   }, [props.match.params.problemId, shouldLoadSubmissions]);
 
   return (
-    <Tab
-      menu={{ secondary: true, pointing: true }}
-      panes={[
-        {
-          menuItem: "問題",
-          render: () => <Content draft={props.draft} {...props} />
-        },
-        !props.draft
-          ? {
-              menuItem: "提出された解答",
-              render: () => <Submissions {...props} submissions={submissions} />
-            }
-          : undefined,
-        isWriter
-          ? {
-              menuItem: "この問題を編集",
-              render: () => <EditProblem draft={props.draft} {...props} />
-            }
-          : undefined
-      ]}
-      onTabChange={(_, prop) =>
-        prop.activeIndex !== prop.defaultActiveIndex &&
-        setShouldLoadSubmissions(true)
-      }
-    />
+    <Container>
+      <Tab
+        menu={{ secondary: true, pointing: true }}
+        panes={[
+          {
+            menuItem: "問題",
+            render: () => <Content draft={props.draft} {...props} />
+          },
+          !props.draft
+            ? {
+                menuItem: "提出された解答",
+                render: () => (
+                  <Submissions {...props} submissions={submissions} />
+                )
+              }
+            : undefined,
+          isWriter
+            ? {
+                menuItem: "この問題を編集",
+                render: () => <EditProblem draft={props.draft} {...props} />
+              }
+            : undefined
+        ]}
+        onTabChange={(_, prop) =>
+          prop.activeIndex !== prop.defaultActiveIndex &&
+          setShouldLoadSubmissions(true)
+        }
+      />
+    </Container>
   );
 };
 

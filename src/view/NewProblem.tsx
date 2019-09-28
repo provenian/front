@@ -2,7 +2,7 @@ import React, { useState, useReducer, useCallback } from "react";
 import { RouteComponentProps } from "react-router";
 import { useAuth0 } from "../components/Auth0Provider";
 import axios from "axios";
-import { Form, Segment, Button, Table } from "semantic-ui-react";
+import { Form, Segment, Button, Table, Container } from "semantic-ui-react";
 import TextareaAutosize from "react-textarea-autosize";
 import remark from "remark";
 import reactRenderer from "remark-react";
@@ -101,132 +101,137 @@ theories [document = false]
   }, [title, content, attachments, tags]);
 
   return (
-    <Form>
-      <Form.Input
-        label="タイトル"
-        defaultValue={title}
-        onChange={event => setTitle(event.target.value)}
-      />
-      <Form.Field>
-        <label>本文</label>
-        <TextareaAutosize
-          defaultValue={content}
-          onChange={event => setContent(event.target.value)}
+    <Container>
+      <Form>
+        <Form.Input
+          label="タイトル"
+          defaultValue={title}
+          onChange={event => setTitle(event.target.value)}
         />
-        <Segment secondary>
-          {
-            remark()
-              .use(reactRenderer, {
-                sanitize: false
-              })
-              .processSync(content).contents
-          }
-        </Segment>
-      </Form.Field>
-      <Form.Input
-        label="タグ"
-        defaultValue={tags.join(",")}
-        onChange={event => setTags(event.target.value.split(","))}
-      />
-      <Form.Field>
-        <label>添付ファイル</label>
-        <Table>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell singleLine>言語</Table.HeaderCell>
-              <Table.HeaderCell>ファイル名</Table.HeaderCell>
-              <Table.HeaderCell>コード</Table.HeaderCell>
-              <Table.HeaderCell />
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {attachments.map(
-              ({ language, filename, code, timestamp }, index) => (
-                <Table.Row key={timestamp}>
-                  <Table.Cell collapsing>
-                    <Form.Input
-                      defaultValue={language}
-                      onChange={event =>
-                        dispatchAttachments({
-                          type: "update",
-                          value: {
-                            type: "language",
-                            value: event.target.value
-                          },
-                          index
-                        })
-                      }
-                    />
-                  </Table.Cell>
-                  <Table.Cell collapsing>
-                    <Form.Input
-                      defaultValue={filename}
-                      onChange={event =>
-                        dispatchAttachments({
-                          type: "update",
-                          value: {
-                            type: "filename",
-                            value: event.target.value
-                          },
-                          index
-                        })
-                      }
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Field>
-                      <TextareaAutosize
-                        defaultValue={code}
+        <Form.Field>
+          <label>本文</label>
+          <TextareaAutosize
+            defaultValue={content}
+            onChange={event => setContent(event.target.value)}
+          />
+          <Segment secondary>
+            {
+              remark()
+                .use(reactRenderer, {
+                  sanitize: false
+                })
+                .processSync(content).contents
+            }
+          </Segment>
+        </Form.Field>
+        <Form.Input
+          label="タグ"
+          defaultValue={tags.join(",")}
+          onChange={event => setTags(event.target.value.split(","))}
+        />
+        <Form.Field>
+          <label>添付ファイル</label>
+          <Table>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell singleLine>言語</Table.HeaderCell>
+                <Table.HeaderCell>ファイル名</Table.HeaderCell>
+                <Table.HeaderCell>コード</Table.HeaderCell>
+                <Table.HeaderCell />
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {attachments.map(
+                ({ language, filename, code, timestamp }, index) => (
+                  <Table.Row key={timestamp}>
+                    <Table.Cell collapsing>
+                      <Form.Input
+                        defaultValue={language}
                         onChange={event =>
                           dispatchAttachments({
                             type: "update",
-                            value: { type: "code", value: event.target.value },
+                            value: {
+                              type: "language",
+                              value: event.target.value
+                            },
                             index
                           })
                         }
                       />
-                    </Form.Field>
-                  </Table.Cell>
-                  <Table.Cell collapsing>
+                    </Table.Cell>
+                    <Table.Cell collapsing>
+                      <Form.Input
+                        defaultValue={filename}
+                        onChange={event =>
+                          dispatchAttachments({
+                            type: "update",
+                            value: {
+                              type: "filename",
+                              value: event.target.value
+                            },
+                            index
+                          })
+                        }
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Field>
+                        <TextareaAutosize
+                          defaultValue={code}
+                          onChange={event =>
+                            dispatchAttachments({
+                              type: "update",
+                              value: {
+                                type: "code",
+                                value: event.target.value
+                              },
+                              index
+                            })
+                          }
+                        />
+                      </Form.Field>
+                    </Table.Cell>
+                    <Table.Cell collapsing>
+                      <Button
+                        color={"red"}
+                        onClick={() =>
+                          dispatchAttachments({
+                            type: "delete",
+                            index
+                          })
+                        }
+                      >
+                        削除
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              )}
+              <Table.Row>
+                <Table.Cell />
+                <Table.Cell />
+                <Table.Cell>
+                  <Form.Field>
                     <Button
-                      color={"red"}
                       onClick={() =>
                         dispatchAttachments({
-                          type: "delete",
-                          index
+                          type: "append"
                         })
                       }
                     >
-                      削除
+                      追加
                     </Button>
-                  </Table.Cell>
-                </Table.Row>
-              )
-            )}
-            <Table.Row>
-              <Table.Cell />
-              <Table.Cell />
-              <Table.Cell>
-                <Form.Field>
-                  <Button
-                    onClick={() =>
-                      dispatchAttachments({
-                        type: "append"
-                      })
-                    }
-                  >
-                    追加
-                  </Button>
-                </Form.Field>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </Form.Field>
-      <Form.Button primary onClick={submit}>
-        送信
-      </Form.Button>
-    </Form>
+                  </Form.Field>
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
+        </Form.Field>
+        <Form.Button primary onClick={submit}>
+          送信
+        </Form.Button>
+      </Form>
+    </Container>
   );
 };
 

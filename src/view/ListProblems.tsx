@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth0 } from "../components/Auth0Provider";
 import ProblemTable from "./problem/ProblemTable";
+import { Container } from "semantic-ui-react";
 
 const ListProblems: React.FC<{ draft: boolean }> = props => {
   const { isAuthenticated, getTokenSilently } = useAuth0() as any;
@@ -36,7 +37,11 @@ const ListProblems: React.FC<{ draft: boolean }> = props => {
     })();
   }, [isAuthenticated, props.draft]);
 
-  return <ProblemTable draft={props.draft} problems={problems}></ProblemTable>;
+  return (
+    <Container>
+      <ProblemTable draft={props.draft} problems={problems}></ProblemTable>
+    </Container>
+  );
 };
 
 export default ListProblems;
